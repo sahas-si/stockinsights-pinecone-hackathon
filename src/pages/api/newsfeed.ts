@@ -7,13 +7,11 @@ interface QueryParams {
   company?: string;
   sector?: string;
   publishedOn?: string;
-  important?: boolean;
+  important?: string;
 }
 
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-   
-   await dbConnect();  // Connect to the MongoDB database
+  await dbConnect(); // Connect to the MongoDB database
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
@@ -35,9 +33,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       query.publishedOn = { $gte: new Date(publishedOn) };
     }
 
-    if (important) {
+    if (important === "true") {
       query.isImportant = true;
     }
+    console.log("Query filter", query)
 
     const newsFeeds = await NewsFeed.find(query);
 
@@ -46,7 +45,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       data: newsFeeds,
     });
   } catch (error) {
-    console.error("Error while fetching newsfeed", error)
+    console.error('Error while fetching newsfeed', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
