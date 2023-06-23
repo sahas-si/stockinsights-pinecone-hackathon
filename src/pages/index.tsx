@@ -1,186 +1,108 @@
-import { useRouter } from 'next/router';
+import { useState } from 'react';
+// eslint-disable-next-line import/extensions
+import { TabElement } from '@/components/Tabelelement';
+// eslint-disable-next-line import/extensions
+import Companyfilter from '@/components/Companyfilter';
+// eslint-disable-next-line import/extensions
+import Datefilter from '@/components/Datefilter';
+// eslint-disable-next-line import/extensions
+import Newsalerts from '@/components/Newsalerts';
+// eslint-disable-next-line import/extensions
+import Sectorfilter from '@/components/Sectorfilter';
+// eslint-disable-next-line import/extensions
+import Sourcefilter from '@/components/Sourcefilter';
 
-import { Meta } from '@/layouts/Meta';
-import { Main } from '@/templates/Main';
-
-const Index = () => {
-  const router = useRouter();
-
-  return (
-    <Main
-      meta={
-        <Meta
-          title="Next.js Boilerplate Presentation"
-          description="Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
-        />
-      }
-    >
-      <a href="https://github.com/ixartz/Next-js-Boilerplate">
-        <img
-          src={`${router.basePath}/assets/images/nextjs-starter-banner.png`}
-          alt="Nextjs starter banner"
-        />
-      </a>
-      <h2 className="text-2xl font-bold">
-        Boilerplate code for your Nextjs project with Tailwind CSS
-      </h2>
-      <p>
-        <span role="img" aria-label="rocket">
-          🚀
-        </span>{' '}
-        Next.js Boilerplate is a starter code for your Next js project by
-        putting developer experience first .{' '}
-        <span role="img" aria-label="zap">
-          ⚡️
-        </span>{' '}
-        Made with Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged,
-        VSCode, Netlify, PostCSS, Tailwind CSS.
-      </p>
-      <h3 className="text-lg font-semibold">Next js Boilerplate Features</h3>
-      <p>Developer experience first:</p>
-      <ul>
-        <li>
-          <span role="img" aria-label="fire">
-            🔥
-          </span>{' '}
-          <a href="https://nextjs.org" rel="nofollow">
-            Next.js
-          </a>{' '}
-          for Static Site Generator
-        </li>
-        <li>
-          <span role="img" aria-label="art">
-            🎨
-          </span>{' '}
-          Integrate with{' '}
-          <a href="https://tailwindcss.com" rel="nofollow">
-            Tailwind CSS
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="nail_care">
-            💅
-          </span>{' '}
-          PostCSS for processing Tailwind CSS
-        </li>
-        <li>
-          <span role="img" aria-label="tada">
-            🎉
-          </span>{' '}
-          Type checking Typescript
-        </li>
-        <li>
-          <span role="img" aria-label="pencil2">
-            ✏️
-          </span>{' '}
-          Linter with{' '}
-          <a href="https://eslint.org" rel="nofollow">
-            ESLint
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="hammer_and_wrench">
-            🛠
-          </span>{' '}
-          Code Formatter with{' '}
-          <a href="https://prettier.io" rel="nofollow">
-            Prettier
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="fox_face">
-            🦊
-          </span>{' '}
-          Husky for Git Hooks
-        </li>
-        <li>
-          <span role="img" aria-label="no_entry_sign">
-            🚫
-          </span>{' '}
-          Lint-staged for running linters on Git staged files
-        </li>
-        <li>
-          <span role="img" aria-label="no_entry_sign">
-            🗂
-          </span>{' '}
-          VSCode configuration: Debug, Settings, Tasks and extension for
-          PostCSS, ESLint, Prettier, TypeScript
-        </li>
-        <li>
-          <span role="img" aria-label="robot">
-            🤖
-          </span>{' '}
-          SEO metadata, JSON-LD and Open Graph tags with Next SEO
-        </li>
-        <li>
-          <span role="img" aria-label="robot">
-            ⚙️
-          </span>{' '}
-          <a
-            href="https://www.npmjs.com/package/@next/bundle-analyzer"
-            rel="nofollow"
-          >
-            Bundler Analyzer
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="rainbow">
-            🌈
-          </span>{' '}
-          Include a FREE minimalist theme
-        </li>
-        <li>
-          <span role="img" aria-label="hundred">
-            💯
-          </span>{' '}
-          Maximize lighthouse score
-        </li>
-      </ul>
-      <p>Built-in feature from Next.js:</p>
-      <ul>
-        <li>
-          <span role="img" aria-label="coffee">
-            ☕
-          </span>{' '}
-          Minify HTML &amp; CSS
-        </li>
-        <li>
-          <span role="img" aria-label="dash">
-            💨
-          </span>{' '}
-          Live reload
-        </li>
-        <li>
-          <span role="img" aria-label="white_check_mark">
-            ✅
-          </span>{' '}
-          Cache busting
-        </li>
-      </ul>
-      <h3 className="text-lg font-semibold">Our Stater code Philosophy</h3>
-      <ul>
-        <li>Minimal code</li>
-        <li>SEO-friendly</li>
-        <li>
-          <span role="img" aria-label="rocket">
-            🚀
-          </span>{' '}
-          Production-ready
-        </li>
-      </ul>
-      <p>
-        Check our GitHub project for more information about{' '}
-        <a href="https://github.com/ixartz/Next-js-Boilerplate">
-          Nextjs Boilerplate
-        </a>
-        . You can also browse our{' '}
-        <a href="https://creativedesignsguru.com/category/nextjs/">
-          Premium NextJS Templates
-        </a>{' '}
-        on our website to support this project.
-      </p>
-    </Main>
+type tabtype = 'Me' | 'Explore';
+export default function Home() {
+  const [tab, setTab] = useState<tabtype>('Me');
+  const currPage = 1;
+  const totalPages = 10;
+  const totalAllerts = 200;
+  const Tabs = (
+    <main className="flex gap-8 text-sm mt-4 w-full">
+      <TabElement active={tab === 'Me'} onClick={() => setTab('Me')}>
+        Me
+      </TabElement>
+      <TabElement active={tab === 'Explore'} onClick={() => setTab('Explore')}>
+        Explore
+      </TabElement>
+    </main>
   );
-};
+  const paginationButtons = (
+    <div className="flex gap-4">
+      {currPage > 1 ? (
+        <button
+          // onClick={prevClikHandler}
+          className="border px-4 py-1 rounded-md hover:bg-gray-100 shadow-sm"
+        >
+          Prev
+        </button>
+      ) : (
+        <button className="border px-4 py-1 rounded-md shadow-sm opacity-40 cursor-default">
+          Prev
+        </button>
+      )}
+      {currPage < Number(totalPages) ? (
+        <button
+          // onClick={nextClikHandler}
+          className="border px-4 py-1 rounded-md hover:bg-gray-100 shadow-sm"
+        >
+          Next
+        </button>
+      ) : (
+        <button className="border px-4 py-1 rounded-md shadow-sm opacity-40 cursor-default">
+          Next
+        </button>
+      )}
+    </div>
+  );
+  // eslint-disable-next-line no-unused-vars
+  const paginationInfo = (
+    <main className="flex items-center justify-between gap-4">
+      {totalAllerts ? (
+        <p className="text-sm !font-normal text-gray-500">
+          {/* {displayPaginationResults(currPage, totalAllerts)} */}
+          20 results of 53
+        </p>
+      ) : (
+        <p className="text-sm invisible"></p>
+      )}
+      {paginationButtons}
+    </main>
+  );
+  return (
+    <main className="max-w-[888px] mx-auto">
+      <div className="flex items-center justify-between mt-6">
+        <div className="flex flex-col gap-3 text-textGray">
+          <h3 className="text-4xl font-semibold ">Today</h3>
+          <p className="font-medium text-lg text-textLightGray">
+            The insights you need to keep ahead
+          </p>
+        </div>
+        <p className="cursor-pointer text-sm font-normal text-gray-500">
+          Last Updated: 14th May 12PM IST
+        </p>
+      </div>
+      <div className="my-6 flex gap-5">
+        <Sourcefilter />
+        <Datefilter />
+        <Sectorfilter />
+        <Companyfilter />
+      </div>
+      <div className="flex justify-between items-center pb-2 text-xs sm:text-sm mt-5 border-b border-gray-200 gap-2 flex-wrap">
+        {Tabs}
+      </div>
 
-export default Index;
+      <div className="mt-6 text-sm flex justify-between items-center">
+        {/* <span className="flex items-center gap-2">
+          <p className="">Filtered Articles: </p>
+          <h1 className="font-medium">53</h1>
+        </span> */}
+        {/* {paginationInfo} */}
+      </div>
+      <Newsalerts />
+      {/* footer */}
+      {/* <div>{paginationInfo}</div> */}
+    </main>
+  );
+}

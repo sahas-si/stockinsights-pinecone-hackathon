@@ -1,9 +1,12 @@
 import '../styles/global.css';
-
 import type { AppProps } from 'next/app';
+// eslint-disable-next-line import/extensions
+import Layout from './Layout';
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
-  <Component {...pageProps} />
-);
-
-export default MyApp;
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
+}
