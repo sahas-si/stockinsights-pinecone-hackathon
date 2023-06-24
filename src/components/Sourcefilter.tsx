@@ -1,12 +1,16 @@
 // eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
+
 import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
 
 const Sourcefilter: React.FC = () => {
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
+  const [selectedSource, setSelectedSource] = useState<string[]>([]);
   const companyRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent): void => {
     if (
@@ -30,15 +34,18 @@ const Sourcefilter: React.FC = () => {
   let selectedPreview;
   const selComp = [];
   const publishers = useApiStore((state: any) =>
-    state.apiResponse.map((item: any) => item.publisher)
+    state?.apiResponse?.map((item: any) => item.publisher)
   );
-  const publishersList = publishers.map((ele: any) => {
+  console.log(selectedSource);
+  const publishersList = publishers?.map((ele: any) => {
     return (
       <div
         key={ele}
-        className="px-8 py-1 hover:bg-neutral-100 text-xs font-medium"
+        onClick={() => setSelectedSource((prev) => [...prev, ele])}
+        className="px-3 py-1 hover:bg-neutral-100 text-xs font-medium flex items-center gap-2"
       >
-        {ele}
+        <MdCheckBox className="text-blue-600" />
+        <p>{ele}</p>
       </div>
     );
   });
