@@ -51,6 +51,7 @@ const Companyfilter: React.FC = () => {
   );
 };
 export default React.memo(Companyfilter);
+// eslint-disable-next-line no-unused-vars
 type Sectors = {
   onClick: () => void;
   showCompanies: boolean;

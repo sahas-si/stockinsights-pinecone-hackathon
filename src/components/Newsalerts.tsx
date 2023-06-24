@@ -1,10 +1,12 @@
 import React, { memo, FC, useEffect } from 'react';
+// eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
 // eslint-disable-next-line import/no-extraneous-dependencies
-// import axios from 'axios';
+// import axios from 'axios';\
+// eslint-disable-next-line import/extensions
 import { dataPoint } from '@/types/type';
-import main from '.storybook/main';
-import Rendercompany from './Rendercompany';
+// import main from '.storybook/main';
+// import Rendercompany from './Rendercompany';
 
 const Newsalerts: FC = () => {
   const apiResponse = useApiStore((state: any) => state.apiResponse);
