@@ -1,5 +1,6 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
-import React, { useEffect, useRef, useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import React, { useEffect, useRef, useState } from 'react';
+
 const Datefilter: React.FC = () => {
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
   const companyRef = useRef<HTMLDivElement>(null);
@@ -12,9 +13,9 @@ const Datefilter: React.FC = () => {
     }
   };
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener('click', handleClickOutside, true);
     return () => {
-      document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener('click', handleClickOutside, true);
     };
   }, []);
   const toggleChevron = showCompanies ? (
@@ -23,7 +24,7 @@ const Datefilter: React.FC = () => {
     <ChevronDownIcon className="w-4 h-4 text-gray-600" />
   );
   let selectedPreview;
-  let selComp = [];
+  const selComp = [];
   return (
     <div
       ref={companyRef}
@@ -32,8 +33,8 @@ const Datefilter: React.FC = () => {
       <main
         className={`flex sm:text-sm text-xs justify-start gap-2 items-center sm:py-2 sm:px-4 px-2 py-1 rounded-3xl w-full border shadow-filterBox ${
           selComp.length
-            ? "bg-selectedFilter border-signatureBlue text-[#3175CC]"
-            : ""
+            ? 'bg-selectedFilter border-signatureBlue text-[#3175CC]'
+            : ''
         }`}
         onClick={() => {
           setShowCompanies((prev) => !prev);
@@ -50,6 +51,7 @@ const Datefilter: React.FC = () => {
   );
 };
 export default React.memo(Datefilter);
+// eslint-disable-next-line no-unused-vars
 type Sectors = {
   onClick: () => void;
   showCompanies: boolean;
