@@ -28,8 +28,15 @@ const Newsalerts: FC = () => {
         }}
         className="flex gap-8 py-6 px-6 cursor-pointer rounded-lg border border-transparent hover:bg-neutral-100"
       >
-        <img src={element.imageUrl} alt="" className="h-24 w-24" />
-        {/* <div className="h-16 w-16 border text-xs">img</div> */}
+        <div
+          className="h-20 w-32 border text-xs"
+          style={{
+            backgroundImage: `url(${element.imageUrl})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+          }}
+        ></div>
         <div className="flex flex-col gap-2">
           <h3 className="font-semibold text-textGray">{element.header}</h3>
           <span className="flex text-xs font-medium text-textLightGray gap-6">
