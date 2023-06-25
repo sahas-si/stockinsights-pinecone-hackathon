@@ -1,3 +1,7 @@
+export interface companySentiment {
+  company: string;
+  sentiment: 'positive' | 'negative' | 'neutral';
+}
 export interface dataPoint {
   _id: string;
   header: string;
@@ -5,6 +9,7 @@ export interface dataPoint {
   publisher: string;
   publishedOn: string;
   companyNames: string[];
+  companySentiment: companySentiment[];
   sectors: string[];
   isImportant: boolean;
   imageUrl: string;

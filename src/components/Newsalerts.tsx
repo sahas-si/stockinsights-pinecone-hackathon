@@ -6,7 +6,9 @@ import useApiStore from '@/store/store';
 // eslint-disable-next-line import/extensions
 import { dataPoint } from '@/types/type';
 // import main from '.storybook/main';
-// import Rendercompany from './Rendercompany';
+// eslint-disable-next-line import/extensions
+import Rendercompany from './Rendercompany';
+
 const Newsalerts: FC = () => {
   const apiResponse = useApiStore((state: any) => state.apiResponse);
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
@@ -45,7 +47,7 @@ const Newsalerts: FC = () => {
           <p className="text-sm text-textLightGray2 line-clamp-3">
             {element.description}
           </p>
-          {/* <Rendercompany companies={element.companyNames} /> */}
+          <Rendercompany companies={element.companySentiment} />
         </div>
       </main>
     );
