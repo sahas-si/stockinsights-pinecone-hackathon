@@ -6,7 +6,7 @@ import dbConnect from '@/db/utils/connect';
 interface QueryParams {
   company?: string;
   publisher?: string;
-  publishedOn?: string;
+  publishedFrom?: string;
   important?: string;
 }
 
@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const { company, publisher, publishedOn, important }: QueryParams = req.query;
+  const { company, publisher, publishedFrom, important }: QueryParams = req.query;
 
   try {
     const query: any = {};
@@ -29,8 +29,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       query.publisher = { $in: publisher.split(',') };
     }
 
-    if (publishedOn) {
-      query.publishedOn = { $gte: new Date(publishedOn) };
+    if (publishedFrom) {
+      query.publishedOn = { $gte: new Date(publishedFrom) };
     }
 
     if (important === "true") {
