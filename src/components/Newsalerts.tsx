@@ -39,9 +39,17 @@ const Newsalerts: FC = () => {
         <img src={element.imageUrl} alt="" className="w-24 h-16" />
         <div className="flex flex-col gap-2">
           <h3 className="font-semibold text-textGray">{element.header}</h3>
-          <span className="flex text-xs font-medium text-textLightGray gap-6">
+          <span className="flex items-center text-xs font-medium text-textLightGray gap-6">
             <h3>{element.publisher}</h3>
-            <p>{date.toString()}</p>
+            <p>
+              {date.toLocaleString('default', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </p>
           </span>
           <div className="flex text-xs gap-2 text-textLightGray">
             {element?.sectors.map((ele) => (
