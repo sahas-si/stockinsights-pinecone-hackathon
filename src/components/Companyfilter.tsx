@@ -10,6 +10,7 @@ const Companyfilter: React.FC = () => {
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
   const companies = useApiStore((state: any) => state.companies);
   const publishers = useApiStore((state: any) => state.publishers);
+  const selectedDate = useApiStore((state: any) => state.selectedDate);
   const setCompanies = useApiStore((state: any) => state.setCompanies);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
   const companyRef = useRef<HTMLDivElement>(null);
@@ -32,25 +33,27 @@ const Companyfilter: React.FC = () => {
   ) : (
     <ChevronDownIcon className="w-4 h-4 text-gray-600" />
   );
-  const applyCompanyFilter = useCallback(() => {
+  const applyFilter = useCallback(() => {
     setShowCompanies(false);
     const selectedCompanies = companies
       ?.filter((ele: any) => ele.selected)
       ?.map((ele: any) => ele.name)
       .join(',');
     const selectedPublishers = publishers
-      ?.filter((ele: any) => ele.selected)
-      ?.map((ele: any) => ele.name)
+      .filter((ele: any) => ele.selected)
+      .map((ele: any) => ele.name)
       .join(',');
-    fetch(`api/newsfeed/?important=true&company=${selectedCompanies}&publisher=${selectedPublishers}
-    `)
+    const dateString = selectedDate.toISOString().slice(0, 10);
+    fetch(
+      `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
+    )
       .then((res) => res.json())
       .then((res) => {
         setApiResponse(res.data);
       })
       .catch((error) => console.error(error))
       .finally(() => {});
-  }, [companies, setApiResponse]);
+  }, [publishers, companies, selectedDate, setApiResponse]);
   const companyList = companies?.map((ele: any) => {
     return (
       <div
@@ -97,7 +100,7 @@ const Companyfilter: React.FC = () => {
           <>
             <main className="h-60 overflow-x-auto">{companyList}</main>
             <button
-              onClick={applyCompanyFilter}
+              onClick={applyFilter}
               className="bg-webColor hover:bg-sky-700 text-xs w-fit text-white mx-8 px-4 py-1 rounded-md my-4"
             >
               Apply

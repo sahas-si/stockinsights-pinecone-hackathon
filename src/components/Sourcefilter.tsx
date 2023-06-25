@@ -13,6 +13,7 @@ const Sourcefilter: React.FC = () => {
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
   const publishers = useApiStore((state: any) => state.publishers);
   const companies = useApiStore((state: any) => state.companies);
+  const selectedDate = useApiStore((state: any) => state.selectedDate);
   const setPublishers = useApiStore((state: any) => state.setPublishers);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
   const companyRef = useRef<HTMLDivElement>(null);
@@ -35,7 +36,7 @@ const Sourcefilter: React.FC = () => {
   ) : (
     <ChevronDownIcon className="w-4 h-4 text-gray-600" />
   );
-  const applySourceFilter = useCallback(() => {
+  const applyFilter = useCallback(() => {
     setShowCompanies(false);
     const selectedCompanies = companies
       ?.filter((ele: any) => ele.selected)
@@ -45,8 +46,9 @@ const Sourcefilter: React.FC = () => {
       .filter((ele: any) => ele.selected)
       .map((ele: any) => ele.name)
       .join(',');
+    const dateString = selectedDate.toISOString().slice(0, 10);
     fetch(
-      `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}`
+      `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -54,7 +56,7 @@ const Sourcefilter: React.FC = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => {});
-  }, [publishers, setApiResponse]);
+  }, [publishers, companies, selectedDate, setApiResponse]);
   const publishersList = publishers?.map((ele: any) => {
     return (
       <div
@@ -102,7 +104,7 @@ const Sourcefilter: React.FC = () => {
           <>
             <main className="h-60 overflow-x-auto">{publishersList}</main>
             <button
-              onClick={applySourceFilter}
+              onClick={applyFilter}
               className="bg-webColor hover:bg-sky-700 text-xs w-fit text-white mx-8 px-4 py-1 rounded-md my-4"
             >
               Apply

@@ -1,6 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -9,23 +15,23 @@ import 'react-day-picker/dist/style.css';
 // eslint-disable-next-line import/extensions
 import { format } from 'date-fns';
 // eslint-disable-next-line import/extensions
+import useApiStore from '@/store/store';
+// eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
-
-export type dateType = {
-  startDate: Date;
-  endDate: Date;
-  modifiled: boolean;
-};
 
 const Datefilter: React.FC = () => {
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
   }, []);
-  const [selected, setSelected] = React.useState<any>(new Date());
+  const selectedDate = useApiStore((state: any) => state.selectedDate);
+  const companies = useApiStore((state: any) => state.companies);
+  const publishers = useApiStore((state: any) => state.publishers);
+  const setSelectedDate = useApiStore((state: any) => state.setSelectedDate);
+  const setApiResponse = useApiStore((state: any) => state.setApiResponse);
   let footer = <p>Please pick a day.</p>;
-  if (selected) {
-    footer = <p>You picked {format(selected, 'PP')}.</p>;
+  if (selectedDate) {
+    footer = <p>You picked {format(selectedDate, 'PP')}.</p>;
   }
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
   const companyRef = useRef<HTMLDivElement>(null);
@@ -62,15 +68,33 @@ const Datefilter: React.FC = () => {
 `;
   const selectedDateStr = useMemo(
     () =>
-      selected.toLocaleString('default', {
+      selectedDate.toLocaleString('default', {
         day: '2-digit',
         month: 'long',
       }),
-    [selected]
+    [selectedDate]
   );
-  // .split(' ')
-  // .reverse()
-  // .join(' ');
+  const applyFilter = useCallback(() => {
+    setShowCompanies(false);
+    const selectedCompanies = companies
+      ?.filter((ele: any) => ele.selected)
+      ?.map((ele: any) => ele.name)
+      .join(',');
+    const selectedPublishers = publishers
+      .filter((ele: any) => ele.selected)
+      .map((ele: any) => ele.name)
+      .join(',');
+    const dateString = selectedDate.toISOString().slice(0, 10);
+    fetch(
+      `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setApiResponse(res.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {});
+  }, [publishers, companies, selectedDate, setApiResponse]);
   return (
     <div
       ref={companyRef}
@@ -92,8 +116,8 @@ const Datefilter: React.FC = () => {
           <style>{css}</style>
           <DayPicker
             mode="single"
-            selected={selected}
-            onSelect={setSelected}
+            selected={selectedDate}
+            onSelect={setSelectedDate}
             footer={footer}
             disabled={{ after: new Date() }}
             modifiersClassNames={{
@@ -103,6 +127,12 @@ const Datefilter: React.FC = () => {
               disabled: { fontSize: '75%' },
             }}
           />
+          <button
+            onClick={applyFilter}
+            className="bg-webColor hover:bg-sky-700 text-xs w-fit text-white mx-4 px-4 py-1 rounded-md my-4"
+          >
+            Apply
+          </button>
         </Previewlist>
       )}
     </div>
