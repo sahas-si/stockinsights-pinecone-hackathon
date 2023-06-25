@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 // eslint-disable-next-line import/extensions
 import { TabElement } from '@/components/Tabelelement';
 // eslint-disable-next-line import/extensions
@@ -11,13 +11,22 @@ import Newsalerts from '@/components/Newsalerts';
 // import Sectorfilter from '@/components/Sectorfilter';
 // eslint-disable-next-line import/extensions
 import Sourcefilter from '@/components/Sourcefilter';
+// eslint-disable-next-line import/extensions
+import useApiStore from '@/store/store';
 
 type tabtype = 'Me' | 'Explore';
 export default function Home() {
   const [tab, setTab] = useState<tabtype>('Me');
-  const currPage = 1;
-  const totalPages = 10;
-  const totalAllerts = 200;
+  const [currPage, setCurrPage] = useState<number>(1);
+  const itemsPerPage = 50;
+  const apiResponse = useApiStore((state: any) => state.apiResponse);
+  const companies = useApiStore((state: any) => state.companies);
+  const publishers = useApiStore((state: any) => state.publishers);
+  const selectedDate = useApiStore((state: any) => state.selectedDate);
+  const setLoading = useApiStore((state: any) => state.setLoading);
+  const setApiResponse = useApiStore((state: any) => state.setApiResponse);
+  const totalItems = apiResponse?.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
   const Tabs = (
     <main className="flex gap-8 text-sm mt-4 w-full">
       <TabElement active={tab === 'Me'} onClick={() => setTab('Me')}>
@@ -28,11 +37,37 @@ export default function Home() {
       </TabElement> */}
     </main>
   );
+  const applyFilter = useCallback(() => {
+    const selectedCompanies = companies
+      ?.filter((ele: any) => ele.selected)
+      ?.map((ele: any) => ele.name)
+      .join(',');
+    const selectedPublishers = publishers
+      .filter((ele: any) => ele.selected)
+      .map((ele: any) => ele.name)
+      .join(',');
+    const dateString = selectedDate.toISOString().slice(0, 10);
+    setLoading(true);
+    fetch(
+      `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setApiResponse(res.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [publishers, companies, selectedDate, setApiResponse, setLoading]);
   const paginationButtons = (
     <div className="flex gap-4">
       {currPage > 1 ? (
         <button
-          // onClick={prevClikHandler}
+          onClick={() => {
+            setCurrPage(currPage - 1);
+            applyFilter();
+          }}
           className="border px-4 py-1 rounded-md hover:bg-gray-100 shadow-sm"
         >
           Prev
@@ -44,7 +79,10 @@ export default function Home() {
       )}
       {currPage < Number(totalPages) ? (
         <button
-          // onClick={nextClikHandler}
+          onClick={() => {
+            setCurrPage(currPage + 1);
+            applyFilter();
+          }}
           className="border px-4 py-1 rounded-md hover:bg-gray-100 shadow-sm"
         >
           Next
@@ -59,10 +97,13 @@ export default function Home() {
   // eslint-disable-next-line no-unused-vars
   const paginationInfo = (
     <main className="flex items-center justify-between gap-4">
-      {totalAllerts ? (
+      {totalItems ? (
         <p className="text-sm !font-normal text-gray-500">
           {/* {displayPaginationResults(currPage, totalAllerts)} */}
-          20 results of 53
+          {totalItems > itemsPerPage
+            ? currPage * itemsPerPage
+            : totalItems}{' '}
+          results of {totalItems}
         </p>
       ) : (
         <p className="text-sm invisible"></p>
@@ -84,10 +125,10 @@ export default function Home() {
         </p>
       </div>
       <div className="my-6 flex gap-5">
-        <Sourcefilter />
-        <Datefilter />
+        <Sourcefilter setCurrPage={setCurrPage} />
+        <Datefilter setCurrPage={setCurrPage} />
         {/* <Sectorfilter /> */}
-        <Companyfilter />
+        <Companyfilter setCurrPage={setCurrPage} />
       </div>
       <div className="flex justify-between items-center pb-2 text-xs sm:text-sm mt-5 border-b border-gray-200 gap-2 flex-wrap">
         {Tabs}
@@ -98,11 +139,15 @@ export default function Home() {
           <p className="">Filtered Articles: </p>
           <h1 className="font-medium">53</h1>
         </span> */}
-        {/* {paginationInfo} */}
+        {paginationInfo}
       </div>
-      <Newsalerts />
+      <Newsalerts
+        currPage={currPage}
+        itemsPerPage={itemsPerPage}
+        totalPages={totalPages}
+      />
       {/* footer */}
-      {/* <div>{paginationInfo}</div> */}
+      <div>{paginationInfo}</div>
     </main>
   );
 }
