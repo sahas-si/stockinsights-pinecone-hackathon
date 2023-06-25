@@ -67,26 +67,19 @@ const Datefilter: React.FC = () => {
   ) : (
     <ChevronDownIcon className="w-4 h-4 text-gray-600" />
   );
-  let selectedPreview;
-  const selComp = [];
   return (
     <div
       ref={companyRef}
       className="flex whitespace-nowrap white cursor-pointer select-none sm:text-sm text-xs relative rounded-3xl w-fit "
     >
       <main
-        className={`flex sm:text-sm text-xs justify-start gap-2 items-center sm:py-2 sm:px-4 px-2 py-1 rounded-3xl w-full border shadow-filterBox ${
-          selComp.length
-            ? 'bg-selectedFilter border-signatureBlue text-[#3175CC]'
-            : ''
-        }`}
+        className={`flex sm:text-sm text-xs justify-start gap-2 items-center sm:py-2 sm:px-4 px-2 py-1 rounded-3xl w-full border shadow-filterBox `}
         onClick={() => {
           setShowCompanies((prev) => !prev);
         }}
       >
         <h3 className="">14 June</h3>
         <span className="flex items-center gap-2 cursor-pointer">
-          {selectedPreview}
           {toggleChevron}
         </span>
       </main>
