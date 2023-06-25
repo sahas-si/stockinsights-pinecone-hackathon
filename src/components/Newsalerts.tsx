@@ -53,9 +53,6 @@ const Newsalerts: FC<NewsalertsProp> = ({ currPage, itemsPerPage }) => {
                 {date.toLocaleString('default', {
                   day: '2-digit',
                   month: 'long',
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
                 })}
               </p>
             </span>

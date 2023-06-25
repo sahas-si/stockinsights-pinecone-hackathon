@@ -21,3 +21,15 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    @apply bg-zinc-300;
+  }
+  100% {
+    @apply bg-zinc-100;
+  }
+}
