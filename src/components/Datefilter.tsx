@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import React, {
+  Dispatch,
   useCallback,
   useEffect,
   useMemo,
@@ -19,7 +20,10 @@ import useApiStore from '@/store/store';
 // eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
 
-const Datefilter: React.FC = () => {
+interface DatefilterProp {
+  setCurrPage: Dispatch<React.SetStateAction<number>>;
+}
+const Datefilter: React.FC<DatefilterProp> = ({ setCurrPage }) => {
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
@@ -97,8 +101,16 @@ const Datefilter: React.FC = () => {
       .catch((error) => console.error(error))
       .finally(() => {
         setLoading(false);
+        setCurrPage(1);
       });
-  }, [publishers, companies, selectedDate, setApiResponse, setLoading]);
+  }, [
+    publishers,
+    companies,
+    selectedDate,
+    setApiResponse,
+    setLoading,
+    setCurrPage,
+  ]);
   return (
     <div
       ref={companyRef}

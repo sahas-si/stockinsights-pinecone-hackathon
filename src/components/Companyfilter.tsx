@@ -1,12 +1,21 @@
 // eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  Dispatch,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 // eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
 
-const Companyfilter: React.FC = () => {
+interface CompanyfilterProp {
+  setCurrPage: Dispatch<React.SetStateAction<number>>;
+}
+const Companyfilter: React.FC<CompanyfilterProp> = ({ setCurrPage }) => {
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
   const companies = useApiStore((state: any) => state.companies);
   const publishers = useApiStore((state: any) => state.publishers);
@@ -56,8 +65,16 @@ const Companyfilter: React.FC = () => {
       .catch((error) => console.error(error))
       .finally(() => {
         setLoading(false);
+        setCurrPage(1);
       });
-  }, [publishers, companies, selectedDate, setApiResponse, setLoading]);
+  }, [
+    publishers,
+    companies,
+    selectedDate,
+    setApiResponse,
+    setLoading,
+    setCurrPage,
+  ]);
   const companyList = companies?.map((ele: any) => {
     return (
       <div
