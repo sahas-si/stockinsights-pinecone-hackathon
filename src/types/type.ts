@@ -8,6 +8,7 @@ export interface dataPoint {
   sectors: string[];
   isImportant: boolean;
   imageUrl: string;
+  description: string;
 }
 export interface apiResponse {
   status: string;

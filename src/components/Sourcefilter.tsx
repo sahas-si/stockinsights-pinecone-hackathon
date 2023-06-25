@@ -70,7 +70,7 @@ const Sourcefilter: React.FC = () => {
           {toggleChevron}
         </span>
       </main>
-      {showCompanies && <Previewlist>{publishersList}</Previewlist>}
+      {/* {showCompanies && <Previewlist>{publishersList}</Previewlist>} */}
     </div>
   );
 };
