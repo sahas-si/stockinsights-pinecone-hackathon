@@ -89,7 +89,13 @@ const Datefilter: React.FC<DatefilterProp> = ({ setCurrPage }) => {
       .filter((ele: any) => ele.selected)
       .map((ele: any) => ele.name)
       .join(',');
-    const dateString = selectedDate.toISOString().slice(0, 10);
+    const dateString = selectedDate
+      .toLocaleString('en-us', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
     setLoading(true);
     fetch(
       `api/newsfeed/?important=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
