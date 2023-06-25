@@ -7,10 +7,12 @@ import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
+// eslint-disable-next-line import/extensions
+import { source } from '../data/source';
 
 const Sourcefilter: React.FC = () => {
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
-  const [selectedSource, setSelectedSource] = useState<string[]>([]);
+  const [publishers, setPublishers] = useState(source);
   const companyRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent): void => {
     if (
@@ -31,21 +33,28 @@ const Sourcefilter: React.FC = () => {
   ) : (
     <ChevronDownIcon className="w-4 h-4 text-gray-600" />
   );
-  let selectedPreview;
-  const selComp = [];
-  const publishers = useApiStore((state: any) =>
-    state?.apiResponse?.map((item: any) => item.publisher)
-  );
-  console.log(selectedSource);
   const publishersList = publishers?.map((ele: any) => {
     return (
       <div
-        key={ele}
-        onClick={() => setSelectedSource((prev) => [...prev, ele])}
-        className="px-3 py-1 hover:bg-neutral-100 text-xs font-medium flex items-center gap-2"
+        key={ele.name}
+        onClick={() =>
+          setPublishers((prev) =>
+            prev.map((item) =>
+              // eslint-disable-next-line no-undef
+              item.name === ele.name
+                ? { ...item, selected: !item.selected }
+                : item
+            )
+          )
+        }
+        className="px-8 py-2 hover:bg-neutral-100 text-xs font-medium flex items-center gap-2"
       >
-        <MdCheckBox className="text-blue-600" />
-        <p>{ele}</p>
+        {ele.selected ? (
+          <MdCheckBox className="text-blue-600" />
+        ) : (
+          <MdCheckBoxOutlineBlank className="text-blue-600" />
+        )}
+        <p>{ele.name}</p>
       </div>
     );
   });
@@ -55,22 +64,27 @@ const Sourcefilter: React.FC = () => {
       className="flex whitespace-nowrap white cursor-pointer select-none sm:text-sm text-xs relative rounded-3xl w-fit "
     >
       <main
-        className={`flex sm:text-sm text-xs justify-start gap-2 items-center sm:py-2 sm:px-4 px-2 py-1 rounded-3xl w-full border shadow-filterBox ${
-          selComp.length
-            ? 'bg-selectedFilter border-signatureBlue text-[#3175CC]'
-            : ''
-        }`}
+        className={`flex sm:text-sm text-xs justify-start gap-2 items-center sm:py-2 sm:px-4 px-2 py-1 rounded-3xl w-full border shadow-filterBox`}
         onClick={() => {
           setShowCompanies((prev) => !prev);
         }}
       >
         <h3 className="">Source</h3>
         <span className="flex items-center gap-2 cursor-pointer">
-          {selectedPreview}
+          {/* {selectedPreview} */}
           {toggleChevron}
         </span>
       </main>
-      {/* {showCompanies && <Previewlist>{publishersList}</Previewlist>} */}
+      {showCompanies && (
+        <Previewlist>
+          <>
+            <main className="h-60 overflow-x-auto">{publishersList}</main>
+            <button className="bg-webColor hover:bg-sky-700 text-xs w-fit text-white mx-8 px-4 py-1 rounded-md my-4">
+              Apply
+            </button>
+          </>
+        </Previewlist>
+      )}
     </div>
   );
 };

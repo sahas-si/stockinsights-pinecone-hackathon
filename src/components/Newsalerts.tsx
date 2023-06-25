@@ -8,6 +8,7 @@ import { dataPoint } from '@/types/type';
 // import main from '.storybook/main';
 // eslint-disable-next-line import/extensions
 import Rendercompany from './Rendercompany';
+// eslint-disable-next-line import/extensions
 import Skeleton from './Skeletonloader';
 
 const Newsalerts: FC = () => {
@@ -19,7 +20,6 @@ const Newsalerts: FC = () => {
     fetch(`api/newsfeed/`)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.data);
         setApiResponse(res.data);
       })
       .catch((error) => console.error(error))
