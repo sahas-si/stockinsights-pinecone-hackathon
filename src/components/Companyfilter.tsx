@@ -12,6 +12,7 @@ const Companyfilter: React.FC = () => {
   const publishers = useApiStore((state: any) => state.publishers);
   const selectedDate = useApiStore((state: any) => state.selectedDate);
   const setCompanies = useApiStore((state: any) => state.setCompanies);
+  const setLoading = useApiStore((state: any) => state.setLoading);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
   const companyRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent): void => {
@@ -44,6 +45,7 @@ const Companyfilter: React.FC = () => {
       .map((ele: any) => ele.name)
       .join(',');
     const dateString = selectedDate.toISOString().slice(0, 10);
+    setLoading(true);
     fetch(
       `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
     )
@@ -52,8 +54,10 @@ const Companyfilter: React.FC = () => {
         setApiResponse(res.data);
       })
       .catch((error) => console.error(error))
-      .finally(() => {});
-  }, [publishers, companies, selectedDate, setApiResponse]);
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [publishers, companies, selectedDate, setApiResponse, setLoading]);
   const companyList = companies?.map((ele: any) => {
     return (
       <div

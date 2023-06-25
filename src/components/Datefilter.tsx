@@ -29,6 +29,7 @@ const Datefilter: React.FC = () => {
   const publishers = useApiStore((state: any) => state.publishers);
   const setSelectedDate = useApiStore((state: any) => state.setSelectedDate);
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
+  const setLoading = useApiStore((state: any) => state.setLoading);
   let footer = <p>Please pick a day.</p>;
   if (selectedDate) {
     footer = <p>You picked {format(selectedDate, 'PP')}.</p>;
@@ -85,6 +86,7 @@ const Datefilter: React.FC = () => {
       .map((ele: any) => ele.name)
       .join(',');
     const dateString = selectedDate.toISOString().slice(0, 10);
+    setLoading(true);
     fetch(
       `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
     )
@@ -93,8 +95,10 @@ const Datefilter: React.FC = () => {
         setApiResponse(res.data);
       })
       .catch((error) => console.error(error))
-      .finally(() => {});
-  }, [publishers, companies, selectedDate, setApiResponse]);
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [publishers, companies, selectedDate, setApiResponse, setLoading]);
   return (
     <div
       ref={companyRef}

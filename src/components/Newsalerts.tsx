@@ -1,4 +1,4 @@
-import React, { memo, FC, useEffect, useState } from 'react';
+import React, { memo, FC, useEffect } from 'react';
 // eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -14,7 +14,8 @@ import Skeleton from './Skeletonloader';
 const Newsalerts: FC = () => {
   const apiResponse = useApiStore((state: any) => state.apiResponse);
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
-  const [loading, setLoading] = useState<boolean>(false);
+  const loading = useApiStore((state: any) => state.loading);
+  const setLoading = useApiStore((state: any) => state.setLoading);
   useEffect(() => {
     setLoading(true);
     fetch(`api/newsfeed/?important=true`)
@@ -24,7 +25,7 @@ const Newsalerts: FC = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [setApiResponse]);
+  }, [setApiResponse, setLoading]);
   const renderList = apiResponse?.map((element: dataPoint) => {
     const date = new Date(element?.publishedOn);
     return (

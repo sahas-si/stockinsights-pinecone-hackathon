@@ -5,6 +5,8 @@ import { apiResponse } from '../types/type';
 import { source, company } from '../data/data';
 
 const useApiStore = create((set) => ({
+  loading: false,
+  setLoading: (response: apiResponse) => set(() => ({ loading: response })),
   apiResponse: null,
   setApiResponse: (response: apiResponse) =>
     set(() => ({ apiResponse: response })),

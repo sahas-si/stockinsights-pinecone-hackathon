@@ -15,6 +15,7 @@ const Sourcefilter: React.FC = () => {
   const companies = useApiStore((state: any) => state.companies);
   const selectedDate = useApiStore((state: any) => state.selectedDate);
   const setPublishers = useApiStore((state: any) => state.setPublishers);
+  const setLoading = useApiStore((state: any) => state.setLoading);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
   const companyRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent): void => {
@@ -38,6 +39,7 @@ const Sourcefilter: React.FC = () => {
   );
   const applyFilter = useCallback(() => {
     setShowCompanies(false);
+    setLoading(true);
     const selectedCompanies = companies
       ?.filter((ele: any) => ele.selected)
       ?.map((ele: any) => ele.name)
@@ -47,6 +49,7 @@ const Sourcefilter: React.FC = () => {
       .map((ele: any) => ele.name)
       .join(',');
     const dateString = selectedDate.toISOString().slice(0, 10);
+    setLoading(true);
     fetch(
       `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
     )
@@ -55,8 +58,10 @@ const Sourcefilter: React.FC = () => {
         setApiResponse(res.data);
       })
       .catch((error) => console.error(error))
-      .finally(() => {});
-  }, [publishers, companies, selectedDate, setApiResponse]);
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [publishers, companies, selectedDate, setApiResponse, setLoading]);
   const publishersList = publishers?.map((ele: any) => {
     return (
       <div
