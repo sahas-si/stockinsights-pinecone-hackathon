@@ -22,6 +22,7 @@ const Newsalerts: FC = () => {
       .catch((error) => console.error(error));
   }, [setApiResponse]);
   const renderList = apiResponse?.map((element: dataPoint) => {
+    const date = new Date(element?.publishedOn);
     return (
       <main
         // eslint-disable-next-line no-underscore-dangle
@@ -32,12 +33,11 @@ const Newsalerts: FC = () => {
         className="flex gap-8 py-6 px-6 cursor-pointer rounded-lg border border-transparent hover:bg-neutral-100"
       >
         <img src={element.imageUrl} alt="" className="w-24 h-16" />
-
         <div className="flex flex-col gap-2">
           <h3 className="font-semibold text-textGray">{element.header}</h3>
           <span className="flex text-xs font-medium text-textLightGray gap-6">
             <h3>{element.publisher}</h3>
-            <p>13 hrs ago</p>
+            <p>{date.toString()}</p>
           </span>
           <div className="flex text-xs gap-2 text-textLightGray">
             {element?.sectors.map((ele) => (
