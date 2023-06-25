@@ -30,7 +30,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (publishedFrom) {
-      query.publishedOn = { $gte: new Date(publishedFrom) };
+      console.log(publishedFrom)
+      let d = new Date(publishedFrom)
+      var nextday = new Date(publishedFrom)
+      nextday.setDate(d.getDate() + 1)
+      query.publishedOn = { $gte: new Date(publishedFrom), $lt: nextday};
     }
 
     if (important === "true") {
