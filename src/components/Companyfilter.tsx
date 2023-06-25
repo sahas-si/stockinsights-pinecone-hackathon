@@ -38,7 +38,7 @@ const Companyfilter: React.FC = () => {
       .filter((ele) => ele.selected)
       .map((ele) => ele.name)
       .join(',');
-    fetch(`api/newsfeed/?important=true&company =${selectedCompanies}`)
+    fetch(`api/newsfeed/?important=true&company=${selectedCompanies}`)
       .then((res) => res.json())
       .then((res) => {
         setApiResponse(res.data);
