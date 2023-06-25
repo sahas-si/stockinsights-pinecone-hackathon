@@ -1,4 +1,4 @@
-import React, { memo, FC, useEffect } from 'react';
+import React, { memo, FC, useEffect, useState } from 'react';
 // eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -8,18 +8,22 @@ import { dataPoint } from '@/types/type';
 // import main from '.storybook/main';
 // eslint-disable-next-line import/extensions
 import Rendercompany from './Rendercompany';
+import Skeleton from './Skeletonloader';
 
 const Newsalerts: FC = () => {
   const apiResponse = useApiStore((state: any) => state.apiResponse);
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
+    setLoading(true);
     fetch(`api/newsfeed/`)
       .then((res) => res.json())
       .then((res) => {
         console.log(res.data);
         setApiResponse(res.data);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, [setApiResponse]);
   const renderList = apiResponse?.map((element: dataPoint) => {
     const date = new Date(element?.publishedOn);
@@ -57,7 +61,7 @@ const Newsalerts: FC = () => {
       <h3 className="text-xs font-semibold pb-6 text-textLightGray">
         BUSINESS NEWS
       </h3>
-      {renderList}
+      {loading ? <Skeleton /> : renderList}
     </div>
   );
 };
