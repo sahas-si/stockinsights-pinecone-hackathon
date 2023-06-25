@@ -1,7 +1,5 @@
 // eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
-// eslint-disable-next-line import/extensions
-import { company } from '@/data/data';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
@@ -10,8 +8,10 @@ import Previewlist from './Previewlist';
 
 const Companyfilter: React.FC = () => {
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
+  const companies = useApiStore((state: any) => state.companies);
+  const publishers = useApiStore((state: any) => state.publishers);
+  const setCompanies = useApiStore((state: any) => state.setCompanies);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
-  const [companies, setCompanies] = useState(company);
   const companyRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent): void => {
     if (
@@ -35,10 +35,15 @@ const Companyfilter: React.FC = () => {
   const applyCompanyFilter = useCallback(() => {
     setShowCompanies(false);
     const selectedCompanies = companies
-      .filter((ele) => ele.selected)
-      .map((ele) => ele.name)
+      ?.filter((ele: any) => ele.selected)
+      ?.map((ele: any) => ele.name)
       .join(',');
-    fetch(`api/newsfeed/?important=true&company=${selectedCompanies}`)
+    const selectedPublishers = publishers
+      ?.filter((ele: any) => ele.selected)
+      ?.map((ele: any) => ele.name)
+      .join(',');
+    fetch(`api/newsfeed/?important=true&company=${selectedCompanies}&publisher=${selectedPublishers}
+    `)
       .then((res) => res.json())
       .then((res) => {
         setApiResponse(res.data);
@@ -51,8 +56,8 @@ const Companyfilter: React.FC = () => {
       <div
         key={ele.name}
         onClick={() =>
-          setCompanies((prev) =>
-            prev.map((item) =>
+          setCompanies(
+            companies.map((item: any) =>
               // eslint-disable-next-line no-undef
               item.name === ele.name
                 ? { ...item, selected: !item.selected }

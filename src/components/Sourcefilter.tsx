@@ -8,13 +8,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useApiStore from '@/store/store';
 // eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
-// eslint-disable-next-line import/extensions
-import { source } from '../data/data';
 
 const Sourcefilter: React.FC = () => {
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
+  const publishers = useApiStore((state: any) => state.publishers);
+  const companies = useApiStore((state: any) => state.companies);
+  const setPublishers = useApiStore((state: any) => state.setPublishers);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
-  const [publishers, setPublishers] = useState(source);
   const companyRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent): void => {
     if (
@@ -37,11 +37,17 @@ const Sourcefilter: React.FC = () => {
   );
   const applySourceFilter = useCallback(() => {
     setShowCompanies(false);
-    const selectedCompanies = publishers
-      .filter((ele) => ele.selected)
-      .map((ele) => ele.name)
+    const selectedCompanies = companies
+      ?.filter((ele: any) => ele.selected)
+      ?.map((ele: any) => ele.name)
       .join(',');
-    fetch(`api/newsfeed/?important=true&publisher=${selectedCompanies}`)
+    const selectedPublishers = publishers
+      .filter((ele: any) => ele.selected)
+      .map((ele: any) => ele.name)
+      .join(',');
+    fetch(
+      `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}`
+    )
       .then((res) => res.json())
       .then((res) => {
         setApiResponse(res.data);
@@ -54,8 +60,8 @@ const Sourcefilter: React.FC = () => {
       <div
         key={ele.name}
         onClick={() =>
-          setPublishers((prev) =>
-            prev.map((item) =>
+          setPublishers(
+            publishers.map((item: any) =>
               // eslint-disable-next-line no-undef
               item.name === ele.name
                 ? { ...item, selected: !item.selected }
