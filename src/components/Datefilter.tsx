@@ -1,12 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { DateRange } from 'react-date-range';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+// eslint-disable-next-line import/extensions
+import { format } from 'date-fns';
 // eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
 
@@ -17,11 +18,11 @@ export type dateType = {
 };
 
 const Datefilter: React.FC = () => {
-  const [date, setDate] = useState<dateType>({
-    startDate: new Date(Date.now() - 86400000),
-    endDate: new Date(Date.now()),
-    modifiled: false,
-  });
+  const [selected, setSelected] = React.useState<any>(new Date());
+  let footer = <p>Please pick a day.</p>;
+  if (selected) {
+    footer = <p>You picked {format(selected, 'PP')}.</p>;
+  }
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
   const companyRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent): void => {
@@ -32,30 +33,6 @@ const Datefilter: React.FC = () => {
       setShowCompanies(false);
     }
   };
-  const [selectedRange, setSelectedRange] = useState([
-    {
-      startDate: date.startDate,
-      endDate: date.endDate,
-      key: 'selection',
-    },
-  ]);
-  const handleChange = useCallback(
-    (item: any) => {
-      setSelectedRange([item.selection]);
-      setDate((prev) => ({
-        ...prev,
-        modifiled: true,
-      }));
-    },
-    [setDate]
-  );
-  useEffect(() => {
-    setDate((prev) => ({
-      ...prev,
-      startDate: selectedRange[0]?.startDate,
-      endDate: selectedRange[0]?.endDate,
-    }));
-  }, [selectedRange, setDate]);
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
     return () => {
@@ -67,6 +44,18 @@ const Datefilter: React.FC = () => {
   ) : (
     <ChevronDownIcon className="w-4 h-4 text-gray-600" />
   );
+  const css = `
+  .my-selected:not([disabled]) { 
+    font-weight: bold; 
+    border: 2px solid #2383E2;
+    color: #2383E2;
+
+  }
+  .my-selected:hover:not([disabled]) { 
+    border-color: ;
+    color: #2383E2;
+  }
+`;
   return (
     <div
       ref={companyRef}
@@ -85,17 +74,19 @@ const Datefilter: React.FC = () => {
       </main>
       {showCompanies && (
         <Previewlist>
-          <DateRange
-            className=""
-            rangeColors={['#2383E2']}
-            editableDateInputs={true}
-            direction="vertical"
-            minDate={new Date('1 May, 2023')}
-            maxDate={new Date(Date.now())}
-            showDateDisplay={false}
-            onChange={(item) => handleChange(item)}
-            moveRangeOnFirstSelection={false}
-            ranges={selectedRange}
+          <style>{css}</style>
+          <DayPicker
+            mode="single"
+            selected={selected}
+            onSelect={setSelected}
+            footer={footer}
+            disabled={{ after: new Date() }}
+            modifiersClassNames={{
+              selected: 'my-selected',
+            }}
+            modifiersStyles={{
+              disabled: { fontSize: '75%' },
+            }}
           />
         </Previewlist>
       )}
