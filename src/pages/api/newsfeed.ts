@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     console.log("Query filter", query)
 
-    const newsFeeds = await NewsFeed.find(query);
+    const newsFeeds = await NewsFeed.find(query).limit(process.env.FEED_LIMIT ? Number(process.env.FEED_LIMIT as string): 500);
 
     return res.status(200).json({
       message: 'Success',
