@@ -1,6 +1,11 @@
+/* eslint-disable camelcase */
 // eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline';
 import React, {
   Dispatch,
   useCallback,
@@ -10,7 +15,11 @@ import React, {
 } from 'react';
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 // eslint-disable-next-line import/extensions
+import { removeDuplicates } from '@/utils/functions';
+// eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
+// eslint-disable-next-line import/extensions
+import { company } from '../data/data';
 
 interface CompanyfilterProp {
   setCurrPage: Dispatch<React.SetStateAction<number>>;
@@ -23,6 +32,7 @@ const Companyfilter: React.FC<CompanyfilterProp> = ({ setCurrPage }) => {
   const setCompanies = useApiStore((state: any) => state.setCompanies);
   const setLoading = useApiStore((state: any) => state.setLoading);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
+  const [companySearch, setCompanySearch] = useState<string>('');
   const companyRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent): void => {
     if (
@@ -100,6 +110,34 @@ const Companyfilter: React.FC<CompanyfilterProp> = ({ setCurrPage }) => {
       </div>
     );
   });
+  useEffect(() => {
+    const filterLocale = company.filter((item: any) =>
+      item.name.toLocaleLowerCase().includes(companySearch.toLocaleLowerCase())
+    );
+    // eslint-disable-next-line no-underscore-dangle
+    const __searchRes = [...filterLocale, ...companies];
+    const searchRes = removeDuplicates(__searchRes);
+    const comapniesSelected = companies.filter(
+      (element: any) => element.selected
+    );
+    const modifiedSelected = comapniesSelected.map((item: any) => {
+      const matchingItem = company.find(
+        (element: any) => element?.name?.toString() === item?.name?.toString()
+      );
+      return {
+        ...matchingItem,
+        ...item,
+      };
+    });
+    // eslint-disable-next-line no-unused-vars
+    const resultsNotSelected = searchRes.filter(
+      ({ name: name_one }: any) =>
+        !comapniesSelected.some(
+          ({ name: name_two }: any) => name_one === name_two
+        )
+    );
+    setCompanies([...modifiedSelected, ...resultsNotSelected]);
+  }, [companySearch, setCompanies]);
   return (
     <div
       ref={companyRef}
@@ -119,6 +157,18 @@ const Companyfilter: React.FC<CompanyfilterProp> = ({ setCurrPage }) => {
       {showCompanies && (
         <Previewlist>
           <>
+            <div className=" flex items-center gap-1 px-8 py-2">
+              <MagnifyingGlassIcon className="h-4 w-4" />
+              <input
+                type="text"
+                value={companySearch}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setCompanySearch(e.target.value)
+                }
+                placeholder="Search"
+                className="grow p-1 !outline-none"
+              />
+            </div>
             <main className="h-60 overflow-x-auto">{companyList}</main>
             <button
               onClick={applyFilter}
