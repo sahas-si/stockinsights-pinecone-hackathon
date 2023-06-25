@@ -5,7 +5,7 @@ import dbConnect from '@/db/utils/connect';
 
 interface QueryParams {
   company?: string;
-  sector?: string;
+  publisher?: string;
   publishedOn?: string;
   important?: string;
 }
@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const { company, sector, publishedOn, important }: QueryParams = req.query;
+  const { company, publisher, publishedOn, important }: QueryParams = req.query;
 
   try {
     const query: any = {};
@@ -25,8 +25,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       query.companyNames = { $in: company.split(',') };
     }
 
-    if (sector && sector.length > 0) {
-      query.sectors = { $in: sector.split(',') };
+    if (publisher && publisher.length > 0) {
+      query.publisher = { $in: publisher.split(',') };
     }
 
     if (publishedOn) {
