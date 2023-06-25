@@ -56,7 +56,7 @@ const Companyfilter: React.FC<CompanyfilterProp> = ({ setCurrPage }) => {
     const dateString = selectedDate.toISOString().slice(0, 10);
     setLoading(true);
     fetch(
-      `api/newsfeed/?import:anyant=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
+      `api/newsfeed/?important=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
     )
       .then((res) => res.json())
       .then((res) => {
