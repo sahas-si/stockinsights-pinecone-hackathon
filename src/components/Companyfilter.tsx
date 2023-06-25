@@ -1,12 +1,15 @@
 // eslint-disable-next-line import/extensions
+import useApiStore from '@/store/store';
+// eslint-disable-next-line import/extensions
 import { company } from '@/data/data';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 // eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
 
 const Companyfilter: React.FC = () => {
+  const setApiResponse = useApiStore((state: any) => state.setApiResponse);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
   const [companies, setCompanies] = useState(company);
   const companyRef = useRef<HTMLDivElement>(null);
@@ -29,6 +32,20 @@ const Companyfilter: React.FC = () => {
   ) : (
     <ChevronDownIcon className="w-4 h-4 text-gray-600" />
   );
+  const applyCompanyFilter = useCallback(() => {
+    setShowCompanies(false);
+    const selectedCompanies = companies
+      .filter((ele) => ele.selected)
+      .map((ele) => ele.name)
+      .join(',');
+    fetch(`api/newsfeed/?important=true&company =${selectedCompanies}`)
+      .then((res) => res.json())
+      .then((res) => {
+        setApiResponse(res.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {});
+  }, [companies, setApiResponse]);
   const companyList = companies?.map((ele: any) => {
     return (
       <div
@@ -74,7 +91,10 @@ const Companyfilter: React.FC = () => {
         <Previewlist>
           <>
             <main className="h-60 overflow-x-auto">{companyList}</main>
-            <button className="bg-webColor hover:bg-sky-700 text-xs w-fit text-white mx-8 px-4 py-1 rounded-md my-4">
+            <button
+              onClick={applyCompanyFilter}
+              className="bg-webColor hover:bg-sky-700 text-xs w-fit text-white mx-8 px-4 py-1 rounded-md my-4"
+            >
               Apply
             </button>
           </>
