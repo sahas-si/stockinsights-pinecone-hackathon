@@ -69,3 +69,45 @@ export const source = [
     selected: false,
   },
 ];
+export const company = [
+  {
+    name: 'Apple Inc',
+    selected: false,
+  },
+  {
+    name: 'Microsoft Corporation',
+    selected: false,
+  },
+  {
+    name: '"Amazon.com Inc',
+    selected: false,
+  },
+  {
+    name: 'Facebook Inc',
+    selected: false,
+  },
+  {
+    name: 'Google LLC',
+    selected: false,
+  },
+  {
+    name: 'Tesla Inc.',
+    selected: false,
+  },
+  {
+    name: 'Johnson & Johnson',
+    selected: false,
+  },
+  {
+    name: 'JPMorgan Chase & Co.',
+    selected: false,
+  },
+  {
+    name: 'Walmart Inc.',
+    selected: false,
+  },
+  {
+    name: 'Procter & Gamble Company',
+    selected: false,
+  },
+];

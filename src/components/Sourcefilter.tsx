@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/extensions
-import useApiStore from '@/store/store';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
@@ -8,7 +7,7 @@ import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/extensions
 import Previewlist from './Previewlist';
 // eslint-disable-next-line import/extensions
-import { source } from '../data/source';
+import { source } from '../data/data';
 
 const Sourcefilter: React.FC = () => {
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
