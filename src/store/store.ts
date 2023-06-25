@@ -14,7 +14,7 @@ const useApiStore = create((set) => ({
   setCompanies: (response: any) => set(() => ({ companies: response })),
   publishers: source,
   setPublishers: (response: any) => set(() => ({ publishers: response })),
-  selectedDate: new Date('24 June'),
+  selectedDate: new Date('24 June 2023'),
   setSelectedDate: (response: any) => set(() => ({ selectedDate: response })),
 }));
 
