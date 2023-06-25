@@ -115,9 +115,9 @@ export default function Home() {
     <main className="max-w-[888px] mx-auto">
       <div className="flex items-center justify-between mt-6">
         <div className="flex flex-col gap-3 text-textGray">
-          <h3 className="text-4xl font-semibold ">News Feed</h3>
-          <p className="font-medium text-lg text-textLightGray">
-            Stay ahead of the market
+          <h3 className="text-2xl font-semibold ">News Feed</h3>
+          <p className="font-small text-sm text-textLightGray">
+          Using Pinecone, stocks are tagged to news articles from the context of companies' earnings transcripts.
           </p>
         </div>
         <p className="cursor-pointer text-sm font-normal text-gray-500">
