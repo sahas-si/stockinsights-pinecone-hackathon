@@ -73,7 +73,7 @@ const Datefilter: React.FC<DatefilterProp> = ({ setCurrPage }) => {
 `;
   const selectedDateStr = useMemo(
     () =>
-      selectedDate.toLocaleString('default', {
+      selectedDate?.toLocaleString('default', {
         day: '2-digit',
         month: 'long',
       }),
