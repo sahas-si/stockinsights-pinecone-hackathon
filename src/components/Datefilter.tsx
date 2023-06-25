@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -18,6 +18,10 @@ export type dateType = {
 };
 
 const Datefilter: React.FC = () => {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
   const [selected, setSelected] = React.useState<any>(new Date());
   let footer = <p>Please pick a day.</p>;
   if (selected) {
@@ -56,6 +60,17 @@ const Datefilter: React.FC = () => {
     color: #2383E2;
   }
 `;
+  const selectedDateStr = useMemo(
+    () =>
+      selected.toLocaleString('default', {
+        day: '2-digit',
+        month: 'long',
+      }),
+    [selected]
+  );
+  // .split(' ')
+  // .reverse()
+  // .join(' ');
   return (
     <div
       ref={companyRef}
@@ -67,12 +82,7 @@ const Datefilter: React.FC = () => {
           setShowCompanies((prev) => !prev);
         }}
       >
-        <h3 className="">
-          {selected.toLocaleString('default', {
-            month: 'long',
-            day: '2-digit',
-          })}
-        </h3>
+        <h3 className="">{hydrated ? selectedDateStr : ''}</h3>
         <span className="flex items-center gap-2 cursor-pointer">
           {toggleChevron}
         </span>

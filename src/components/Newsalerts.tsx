@@ -17,7 +17,7 @@ const Newsalerts: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
-    fetch(`api/newsfeed/`)
+    fetch(`api/newsfeed/?important=true`)
       .then((res) => res.json())
       .then((res) => {
         setApiResponse(res.data);
