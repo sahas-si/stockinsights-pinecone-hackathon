@@ -5,10 +5,12 @@ import React from 'react';
 const Navar = () => {
   // const pathname = usePathname();
   return (
-    <nav className="py-3 border-b">
-      <div className={`flex items-center justify-between container mx-auto`}>
+    <nav className="py-3 border-b bg-[#f7fbfd]">
+      <div
+        className={`flex items-center justify-between container mx-auto max-w-[888px]`}
+      >
         <span className="flex gap-8 items-center">
-          {/* <h1 className="font-bold text-2xl text-neutral-800">StockInsights</h1> */}
+          <h1 className="font-bold text-2xl text-neutral-800">StockInsights</h1>
           <h3 className="text-sm cursor-pointer">News Feed</h3>
         </span>
         <span>
