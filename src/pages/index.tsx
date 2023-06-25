@@ -134,11 +134,7 @@ export default function Home() {
         {Tabs}
       </div>
 
-      <div className="mt-6 text-sm flex justify-between items-center">
-        {/* <span className="flex items-center gap-2">
-          <p className="">Filtered Articles: </p>
-          <h1 className="font-medium">53</h1>
-        </span> */}
+      <div className="mt-6 text-sm flex justify-between items-center w-fit ml-auto">
         {paginationInfo}
       </div>
       <Newsalerts
