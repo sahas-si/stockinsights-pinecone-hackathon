@@ -79,7 +79,7 @@ export const company = [
     selected: false,
   },
   {
-    name: '"Amazon.com Inc',
+    name: 'Amazon.com Inc',
     selected: false,
   },
   {
