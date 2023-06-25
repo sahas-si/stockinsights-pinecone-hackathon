@@ -67,7 +67,12 @@ const Datefilter: React.FC = () => {
           setShowCompanies((prev) => !prev);
         }}
       >
-        <h3 className="">14 June</h3>
+        <h3 className="">
+          {selected.toLocaleString('default', {
+            month: 'long',
+            day: '2-digit',
+          })}
+        </h3>
         <span className="flex items-center gap-2 cursor-pointer">
           {toggleChevron}
         </span>
