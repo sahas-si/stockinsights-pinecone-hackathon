@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 // eslint-disable-next-line import/extensions
 import { TabElement } from '@/components/Tabelelement';
 // eslint-disable-next-line import/extensions
@@ -23,11 +23,13 @@ export default function Home() {
   const setCompanies = useApiStore((state: any) => state.setCompanies);
   const publishers = useApiStore((state: any) => state.publishers);
   const setPublishers = useApiStore((state: any) => state.setPublishers);
-  const selectedDate = useApiStore((state: any) => state.selectedDate);
   const setLoading = useApiStore((state: any) => state.setLoading);
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
-  const totalItems = apiResponse?.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const totalItems = useMemo(() => apiResponse?.length, [apiResponse]);
+  const totalPages = useMemo(
+    () => Math.ceil(totalItems / itemsPerPage),
+    [totalItems]
+  );
   const Tabs = (
     <main className="flex gap-8 text-sm mt-4 w-full">
       <TabElement active={tab === 'Me'} onClick={() => setTab('Me')}>
@@ -47,10 +49,9 @@ export default function Home() {
       .filter((ele: any) => ele.selected)
       .map((ele: any) => ele.name)
       .join(',');
-    const dateString = selectedDate.toISOString().slice(0, 10);
     setLoading(true);
     fetch(
-      `api/newsfeed/?important=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
+      `api/newsfeed/?important=true&publisher=${selectedPublishers}&company=${selectedCompanies}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -60,7 +61,7 @@ export default function Home() {
       .finally(() => {
         setLoading(false);
       });
-  }, [publishers, companies, selectedDate, setApiResponse, setLoading]);
+  }, [publishers, companies, setApiResponse, setLoading]);
   const selectedCompaniesArr = companies?.filter((ele: any) => ele.selected);
   const selectedPublishersArr = publishers?.filter((ele: any) => ele.selected);
   const resetFilterHandler = useCallback(() => {
@@ -112,15 +113,15 @@ export default function Home() {
     </div>
   );
   // eslint-disable-next-line no-unused-vars
+  const pageRes =
+    currPage * itemsPerPage > totalItems ? totalItems : currPage * itemsPerPage;
   const paginationInfo = (
     <main className="flex items-center justify-between gap-4">
       {totalItems ? (
         <p className="text-sm !font-normal text-gray-500">
           {/* {displayPaginationResults(currPage, totalAllerts)} */}
-          {totalItems > itemsPerPage
-            ? currPage * itemsPerPage
-            : totalItems}{' '}
-          results of {totalItems}
+          {totalItems > itemsPerPage ? pageRes : totalItems} results of{' '}
+          {totalItems}
         </p>
       ) : (
         <p className="text-sm invisible"></p>
