@@ -39,7 +39,16 @@ const Rendercompany: FC<RendercompanyProp> = ({ companies }) => {
     <div className="flex gap-4 text-sm">
       {companies.map((ele, index) => {
         const { company, sentiment } = ele;
-        const { bgcolor, textcolor } = bgColors[sentiment];
+        let bgcolor, textcolor
+        if(bgColors[sentiment]) {
+          bgcolor = bgColors[sentiment]['bgcolor'];
+          textcolor = bgColors[sentiment]['textcolor'];
+        }else {
+          console.log(sentiment)
+          bgcolor = '#F8E5BA'
+          textcolor = `#9C3F0F`
+        }
+        
         return (
           <p
             key={ele.company + index}
