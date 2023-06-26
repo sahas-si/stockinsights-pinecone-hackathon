@@ -10,6 +10,8 @@ import pinecone
 import os
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from pymongo import MongoClient
+import certifi
 
 load_dotenv()
 
@@ -27,9 +29,6 @@ EMBEDDING_CHUNK_SIZE = 1000
 TEXT_SPLITTER_CHUNK_SIZE = 512
 TEXT_SPLITTER_CHUNK_OVERLAP = 20
 PINECONE_UPSERT_BATCH_SIZE = 100
-
-from pymongo import MongoClient
-import certifi
 
 # Connect to the MongoDB instance, database & collection
 MONGO_URL=os.getev("MONGO_URL")
