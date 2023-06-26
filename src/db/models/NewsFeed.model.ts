@@ -1,6 +1,11 @@
 import type { Document } from 'mongoose';
 import mongoose, { Schema } from 'mongoose';
 
+// Define the company sentiment subdocument schema
+const CompanySentimentSchema = new Schema({
+  company: { type: String, required: true },
+  sentiment: { type: String, required: true }
+});
 export interface INewsFeed {
   header: string;
   sourceUrl: string;
@@ -11,6 +16,10 @@ export interface INewsFeed {
   isImportant: boolean;
   imageUrl: string;
   impactScore: number;
+  companySentiment: {
+    company: string;
+    sentiment: string;
+  }[];
 }
 
 export interface NewsFeedDocument extends INewsFeed, Document {}
@@ -25,6 +34,7 @@ const NewsFeedSchema: Schema<NewsFeedDocument> = new Schema(
     sectors: { type: [String], required: true },
     isImportant: { type: Boolean, required: true },
     imageUrl: { type: String, required: true },
+    companySentiment: { type: [CompanySentimentSchema], required: true },
     impactScore: { type: Number, required: true },
   },
   { timestamps: true }

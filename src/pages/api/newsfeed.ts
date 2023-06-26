@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import NewsFeed from '@/db/models/NewsFeed.model';
+import NewsFeed, { NewsFeedDocument } from '@/db/models/NewsFeed.model';
 import dbConnect from '@/db/utils/connect';
+import { companySentiment } from '@/types/type';
 
 interface QueryParams {
   company?: string;
@@ -42,11 +43,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     console.log("Query filter", query)
 
-    const newsFeeds = await NewsFeed.find(query).sort({impactScore: -1}).limit(process.env.FEED_LIMIT ? Number(process.env.FEED_LIMIT as string): 500);
+    const newsFeeds:NewsFeedDocument[] = await NewsFeed.find(query).sort({impactScore: -1}).limit(process.env.FEED_LIMIT ? Number(process.env.FEED_LIMIT as string): 500);
+    for (let newsFeed of newsFeeds as NewsFeedDocument[]){
+        let companySentiments = newsFeed.companySentiment
+        newsFeed.companySentiment = companySentiments.filter((sentiment) => sentiment.sentiment != 'neutral')
+    }
+
+    const filteredNewsFeeds = newsFeeds.filter((newsFeed) => newsFeed.companySentiment.length > 0)
 
     return res.status(200).json({
       message: 'Success',
-      data: newsFeeds,
+      data: filteredNewsFeeds,
     });
   } catch (error) {
     console.error('Error while fetching newsfeed', error);
