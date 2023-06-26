@@ -30,7 +30,8 @@ const Newsalerts: FC<NewsalertsProp> = ({ currPage, itemsPerPage }) => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, [setApiResponse, setLoading]);
+  }, []);
+  console.log((currPage - 1) * itemsPerPage, currPage * itemsPerPage);
   const renderList = apiResponse
     ?.slice((currPage - 1) * itemsPerPage, currPage * itemsPerPage)
     ?.map((element: dataPoint) => {

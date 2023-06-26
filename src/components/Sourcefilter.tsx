@@ -23,7 +23,6 @@ const Sourcefilter: React.FC<SourcefilterProp> = ({ setCurrPage }) => {
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
   const publishers = useApiStore((state: any) => state.publishers);
   const companies = useApiStore((state: any) => state.companies);
-  const selectedDate = useApiStore((state: any) => state.selectedDate);
   const setPublishers = useApiStore((state: any) => state.setPublishers);
   const setLoading = useApiStore((state: any) => state.setLoading);
   const [showCompanies, setShowCompanies] = useState<boolean>(false);
@@ -58,7 +57,6 @@ const Sourcefilter: React.FC<SourcefilterProp> = ({ setCurrPage }) => {
       .filter((ele: any) => ele.selected)
       .map((ele: any) => ele.name)
       .join(',');
-    const dateString = selectedDate.toISOString().slice(0, 10);
     setLoading(true);
     fetch(
       `api/newsfeed/?important=true&publisher=${selectedPublishers}&company=${selectedCompanies}`
@@ -72,14 +70,7 @@ const Sourcefilter: React.FC<SourcefilterProp> = ({ setCurrPage }) => {
         setLoading(false);
         setCurrPage(1);
       });
-  }, [
-    publishers,
-    companies,
-    selectedDate,
-    setApiResponse,
-    setLoading,
-    setCurrPage,
-  ]);
+  }, [publishers, companies, setApiResponse, setLoading, setCurrPage]);
   const publishersList = publishers?.map((ele: any) => {
     return (
       <div
