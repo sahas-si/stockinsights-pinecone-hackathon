@@ -7,11 +7,11 @@ import Companyfilter from '@/components/Companyfilter';
 // eslint-disable-next-line import/extensions
 import Newsalerts from '@/components/Newsalerts';
 // eslint-disable-next-line import/extensions
-// import Sectorfilter from '@/components/Sectorfilter';
-// eslint-disable-next-line import/extensions
 import Sourcefilter from '@/components/Sourcefilter';
 // eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
+// eslint-disable-next-line no-unused-vars, import/extensions
+import { company, source } from '@/data/data';
 
 type tabtype = 'Me' | 'Explore';
 export default function Home() {
@@ -72,8 +72,8 @@ export default function Home() {
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        setCompanies([]);
-        setPublishers([]);
+        setCompanies(company);
+        setPublishers(source);
         setLoading(false);
       });
   }, [setCompanies, setPublishers, setLoading, setApiResponse]);
