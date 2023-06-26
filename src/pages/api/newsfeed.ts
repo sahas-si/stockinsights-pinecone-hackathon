@@ -49,8 +49,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         newsFeed.companySentiment = companySentiments.filter((sentiment) => sentiment.sentiment != 'neutral')
     }
 
-    const filteredNewsFeeds = newsFeeds.filter((newsFeed) => newsFeed.companySentiment.length > 0)
+    const filteredNewsFeeds:NewsFeedDocument[] = newsFeeds.filter((newsFeed) => newsFeed.companySentiment.length > 0)
+    // let companies:{name:string, selected:boolean}[] = []
+    // let companyMap = new Map<String, boolean>();
+    // for(let newsFeed of filteredNewsFeeds as NewsFeedDocument[]) {
+    //   for (let ele of newsFeed.companySentiment) {
+    //     if(ele.sentiment == 'positive' || ele.sentiment == 'negative') {
+    //       if(companyMap.has(ele.company)) {
+    //         continue
+    //       } else {
+    //         companyMap.set(ele.company, true)
+    //         companies.push({name: ele.company, selected:true})
+    //       }
+    //     }
+    //   }
+    // }
+    // companies.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1)
 
+    // console.log(companies.slice(0,100))
+    // console.log(companies.slice(100,-1))
+    
     return res.status(200).json({
       message: 'Success',
       data: filteredNewsFeeds,

@@ -49,7 +49,7 @@ export default function Home() {
     const dateString = selectedDate.toISOString().slice(0, 10);
     setLoading(true);
     fetch(
-      `api/newsfeed/?important=true&publisher=${selectedPublishers}&company=${selectedCompanies}&publishedFrom=${dateString}`
+      `api/newsfeed/?important=true&publisher=${selectedPublishers}&company=${selectedCompanies}`
     )
       .then((res) => res.json())
       .then((res) => {
