@@ -1,18 +1,17 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useCallback, useState } from 'react';
 // eslint-disable-next-line import/extensions
 import { TabElement } from '@/components/Tabelelement';
 // eslint-disable-next-line import/extensions
 import Companyfilter from '@/components/Companyfilter';
 // eslint-disable-next-line import/extensions
-import Datefilter from '@/components/Datefilter';
-// eslint-disable-next-line import/extensions
 import Newsalerts from '@/components/Newsalerts';
-// eslint-disable-next-line import/extensions
-// import Sectorfilter from '@/components/Sectorfilter';
 // eslint-disable-next-line import/extensions
 import Sourcefilter from '@/components/Sourcefilter';
 // eslint-disable-next-line import/extensions
 import useApiStore from '@/store/store';
+// eslint-disable-next-line no-unused-vars, import/extensions
+import { company, source } from '@/data/data';
 
 type tabtype = 'Me' | 'Explore';
 export default function Home() {
@@ -21,7 +20,9 @@ export default function Home() {
   const itemsPerPage = 50;
   const apiResponse = useApiStore((state: any) => state.apiResponse);
   const companies = useApiStore((state: any) => state.companies);
+  const setCompanies = useApiStore((state: any) => state.setCompanies);
   const publishers = useApiStore((state: any) => state.publishers);
+  const setPublishers = useApiStore((state: any) => state.setPublishers);
   const selectedDate = useApiStore((state: any) => state.selectedDate);
   const setLoading = useApiStore((state: any) => state.setLoading);
   const setApiResponse = useApiStore((state: any) => state.setApiResponse);
@@ -60,6 +61,22 @@ export default function Home() {
         setLoading(false);
       });
   }, [publishers, companies, selectedDate, setApiResponse, setLoading]);
+  const selectedCompaniesArr = companies?.filter((ele: any) => ele.selected);
+  const selectedPublishersArr = publishers?.filter((ele: any) => ele.selected);
+  const resetFilterHandler = useCallback(() => {
+    setLoading(true);
+    fetch(`api/newsfeed/?important=true&publisher`)
+      .then((res) => res.json())
+      .then((res) => {
+        setApiResponse(res.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        setCompanies(company);
+        setPublishers(source);
+        setLoading(false);
+      });
+  }, [setCompanies, setPublishers, setLoading, setApiResponse]);
   const paginationButtons = (
     <div className="flex gap-4">
       {currPage > 1 ? (
@@ -117,7 +134,8 @@ export default function Home() {
         <div className="flex flex-col gap-3 text-textGray">
           <h3 className="text-2xl font-semibold ">News Mapper</h3>
           <p className="font-small text-sm text-textLightGray">
-          Using Pinecone, stocks are tagged to news articles from the context of companies' earnings transcripts.
+            Using Pinecone, stocks are tagged to news articles from the context
+            of companies' earnings transcripts.
           </p>
         </div>
         <p className="cursor-pointer text-sm font-normal text-gray-500">
@@ -129,6 +147,16 @@ export default function Home() {
         {/* <Datefilter setCurrPage={setCurrPage} /> */}
         {/* <Sectorfilter /> */}
         <Companyfilter setCurrPage={setCurrPage} />
+        {selectedCompaniesArr.length || selectedPublishersArr.length ? (
+          <button
+            className="text-sm border px-4 rounded-md text-webColor border-webColor hover:bg-sky-50"
+            onClick={resetFilterHandler}
+          >
+            Reset filters
+          </button>
+        ) : (
+          ''
+        )}
       </div>
       <div className="flex justify-between items-center pb-2 text-xs sm:text-sm mt-5 border-b border-gray-200 gap-2 flex-wrap">
         {Tabs}
