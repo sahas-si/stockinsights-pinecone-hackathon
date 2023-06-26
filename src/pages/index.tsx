@@ -126,7 +126,7 @@ export default function Home() {
       </div>
       <div className="my-6 flex gap-5">
         <Sourcefilter setCurrPage={setCurrPage} />
-        <Datefilter setCurrPage={setCurrPage} />
+        {/* <Datefilter setCurrPage={setCurrPage} /> */}
         {/* <Sectorfilter /> */}
         <Companyfilter setCurrPage={setCurrPage} />
       </div>
