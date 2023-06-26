@@ -32,9 +32,9 @@ from pymongo import MongoClient
 import certifi
 
 # Connect to the MongoDB instance, database & collection
-MONGO_URL="mongodb+srv://stock-insights-backend-service-user-prod:VwqU2IneGthy72t7@stock-insights-atlas.r40ax.mongodb.net/test-db?retryWrites=true&w=majority"
-DB_NAME="test-db"
-COLLECTION = "us_report_insights"
+MONGO_URL=os.getev("MONGO_URL")
+DB_NAME=os.getenv("DB_NAME")
+COLLECTION = os.getenv("COLLECTION")
 
 client = MongoClient(MONGO_URL,tlsCAFile=certifi.where())
 mongo_db = client[DB_NAME]
