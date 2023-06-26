@@ -69,180 +69,169 @@ export const source = [
     selected: false,
   },
 ];
-export const company = [{ name: '10X Genomics Inc', selected: false },
-{ name: '3M', selected: false },
-{ name: 'Activision Blizzard', selected: false },
-{ name: 'AeroVironment, Inc.', selected: false },
-{ name: 'Agilent Technologies Inc', selected: false },
-{ name: 'Agilent Technologies Inc.', selected: false },
-{ name: 'Airbus', selected: false },
-{ name: 'Alibaba Group Holding Limited', selected: false },
-{ name: 'Alphabet Inc', selected: false },
-{ name: 'Alphabet Inc.', selected: false },
-{ name: 'Amarvel Biotech', selected: false },
-{ name: 'Amazon', selected: false },
-{ name: 'Amazon.com Inc', selected: false },
-{ name: 'Amazon.com, Inc.', selected: false },
-{ name: 'AmEx', selected: false },
-{ name: 'Apple', selected: false },
-{ name: 'Apple Inc', selected: false },
-{ name: 'Apple Inc.', selected: false },
-{ name: 'AstraZeneca', selected: false },
-{ name: 'AT&T Inc', selected: false },
-{ name: 'Avid Bioservices Inc', selected: false },
-{ name: 'Baker Hughes Co.', selected: false },
-{ name: 'Bank of America Corporation', selected: false },
-{ name: 'Bank of England', selected: false },
-{ name: 'Bank of Hawaii Corporation', selected: false },
-{ name: 'Bank of New York Mellon Corporation', selected: false },
-{ name: 'Best Buy Co., Inc.', selected: false },
-{ name: 'BioNTech', selected: false },
-{ name: 'BioSteel', selected: false },
-{ name: 'Bitcoin and cryptos', selected: false },
-{ name: 'BlackBerry Limited', selected: false },
-{ name: 'BlackRock', selected: false },
-{ name: 'BlackRock Inc', selected: false },
-{ name: 'BlackRock Inc.', selected: false },
-{ name: 'Boeing', selected: false },
-{ name: 'BP', selected: false },
-{ name: 'Canopy', selected: false },
-{ name: 'Canopy Growth Corporation', selected: false },
-{ name: 'Capital One', selected: false },
-{ name: 'Chevron', selected: false },
-{ name: 'Chevron Corporation', selected: false },
-{ name: 'China', selected: false },
-{ name: 'Citigroup Inc', selected: false },
-{ name: 'CME Group Inc', selected: false },
-{ name: 'ConocoPhillips', selected: false },
-{ name: 'Credit Suisse', selected: false },
-{ name: 'Cummins Inc', selected: false },
-{ name: 'Cyrus One', selected: false },
-{ name: 'D.R. Horton Inc', selected: false },
-{ name: 'Daimler', selected: false },
-{ name: 'Dave & Buster’s Entertainment Inc', selected: false },
-{ name: 'Devon Energy Corporation', selected: false },
-{ name: "Dick's Sporting Goods", selected: false },
-{ name: 'Discovery', selected: false },
-{ name: 'Disney', selected: false },
-{ name: 'DraftKings Inc.', selected: false },
-{ name: 'Equifax', selected: false },
-{ name: 'Evergrande', selected: false },
-{ name: 'Exxon Mobil Corporation', selected: false },
-{ name: 'ExxonMobil', selected: false },
-{ name: 'ExxonMobil Corporation', selected: false },
-{ name: 'Facebook', selected: false },
-{ name: 'Facebook Inc', selected: false },
-{ name: 'Facebook, Inc.', selected: false },
-{ name: 'FactSet Research Systems Inc.', selected: false },
-{ name: 'Farmers', selected: false },
-{ name: 'Federal Reserve', selected: false },
-{ name: 'FedEx Corporation', selected: false },
-{ name: 'Ford', selected: false },
-{ name: 'Ford Motor Company', selected: false },
-{ name: 'FTX', selected: false },
-{ name: 'fuboTV Inc', selected: false },
-{ name: 'GameStop', selected: false },
-{ name: 'General Electric Company', selected: false },
-{ name: 'General Motors Company', selected: false },
-{ name: 'Gilead', selected: false },
-{ name: 'GlaxoSmithKline', selected: false },
-{ name: 'GlaxoSmithKline plc', selected: false },
-{ name: 'Global markets', selected: false },
-{ name: 'Global Payments Inc', selected: false },
-{ name: 'Goldman Sachs', selected: false },
-{ name: 'Google', selected: false },
-{ name: 'Grantham', selected: false },
-{ name: 'Guess? Inc.', selected: false },
-{ name: 'Halstead', selected: false },
-{ name: 'Hb Fuller', selected: false },
-{ name: 'HCI Group Inc', selected: false },
-{ name: 'HealthEquity Inc.', selected: false },
-{ name: 'Hewlett Packard Enterprise Company', selected: false },
-{ name: 'Huawei', selected: false },
-{ name: 'IBM', selected: false },
-{ name: 'Illinois', selected: false },
-{ name: 'Insurers', selected: false },
-{ name: 'Invitae', selected: false },
-{ name: 'Johnson & Johnson', selected: false },
-{ name: 'JPMorgan Chase & Co.', selected: false },
-{ name: 'KB Home', selected: false },
-{ name: 'Knotel', selected: false },
-{ name: 'Koch Industries', selected: false },
-{ name: 'Lam Research Corporation', selected: false },
-{ name: 'MakeMyTrip Limited', selected: false },
-  { name: 'ManpowerGroup', selected: false },
-  { name: 'Mastercard', selected: false },
-  { name: 'Medtronic PLC', selected: false },
-  { name: 'Meta', selected: false },
-  { name: 'MetLife Inc', selected: false },
-  { name: 'MGM Resorts International', selected: false },
-  { name: 'Microsoft', selected: false },
-  { name: 'Microsoft Corporation', selected: false },
-  { name: 'Moderna Inc', selected: false },
-  { name: 'Morgan Stanley', selected: false },
-  { name: 'Motorcar Parts of America, Inc.', selected: false },
-  { name: 'Nasdaq Inc', selected: false },
-  { name: 'NetEase Inc', selected: false },
-  { name: 'NextEra Energy', selected: false },
-  { name: 'NextEra Energy Resources', selected: false },
-  { name: 'Nio Inc', selected: false },
-  { name: 'Novagold Resources Inc', selected: false },
-  { name: 'Novavax Inc', selected: false },
-  { name: 'Nucor Corporation', selected: false },
-  { name: 'Nvidia', selected: false },
-  { name: 'Nvidia Corporation', selected: false },
-  { name: 'Open the Books', selected: false },
-  { name: 'Oracle Corporation', selected: false },
-  { name: 'Paychex, Inc.', selected: false },
-  { name: 'Pfizer', selected: false },
-  { name: 'Pinduoduo Inc', selected: false },
-  { name: 'Pioneer', selected: false },
-  { name: 'Plug Power Inc.', selected: false },
-  { name: 'Procter & Gamble Company', selected: false },
-  { name: 'PwC', selected: false },
-  { name: 'Red Hat', selected: false },
-  { name: 'Regeneron Pharmaceuticals Inc', selected: false },
-  { name: 'Republic Services Inc', selected: false },
-  { name: 'Republican Attorneys General Association', selected: false },
-  { name: 'Sequoia Capital', selected: false },
-  { name: 'Shell', selected: false },
-  { name: 'Shutterstock', selected: false },
-  { name: 'Shutterstock Inc.', selected: false },
-  { name: 'Signature Bank', selected: false },
-  { name: 'Starbucks', selected: false },
-  { name: 'Starbucks Corporation', selected: false },
-  { name: 'State Street Corporation', selected: false },
-  { name: 'Take-Two Interactive Software Inc', selected: false },
-  { name: 'Tata Consultancy Services Ltd', selected: false },
-  { name: 'Teamsters', selected: false },
-  { name: 'Tech Giants', selected: false },
-  { name: 'Temu', selected: false },
-  { name: 'Tesla', selected: false },
-  { name: 'Texas Capital Bancshares, Inc.', selected: false },
-  { name: 'The Walt Disney Company', selected: false },
-  { name: 'TMX Group Limited', selected: false },
-  { name: 'Total SA', selected: false },
-  { name: 'Trip.com Group', selected: false },
-  { name: 'Trip.com Group Ltd', selected: false },
-  { name: 'TX Empire', selected: false },
-  { name: 'U.S. Federal Reserve', selected: false },
-  { name: 'Uber Technologies Inc', selected: false },
-  { name: 'UnitedHealth Group', selected: false },
-  { name: 'University of Oxford', selected: false },
-  { name: 'US Chamber of Commerce', selected: false },
-  { name: 'Verizon Communications Inc.', selected: false },
-  { name: 'Visa Inc', selected: false },
-  { name: 'Visa Inc.', selected: false },
-  { name: 'Wagner private military company', selected: false },
-  { name: 'Wal-Mart', selected: false },
-  { name: 'Walmart Inc.', selected: false },
-  { name: 'Warner Bros Discovery Inc', selected: false },
-  { name: 'Whirlpool Corp', selected: false },
-  { name: 'Wipro Limited', selected: false },
-  { name: 'Wisk Aero', selected: false },
-  { name: 'Worley Ltd.', selected: false },
-  { name: 'Wynn Resorts Limited', selected: false },
-  { name: 'XPeng Inc.', selected: false },
-  { name: 'Yatra Online Inc', selected: false },
-  { name: 'YUM! Brands Inc', selected: false },
-  { name: 'Zoom Video Communications Inc', selected: false }]
+export const company = [{
+  "name": "10X Genomics Inc",
+  "selected": false
+}, {
+  "name": "Agilent Technologies Inc",
+  "selected": false
+}, {
+  "name": "Alibaba Group Holding Limited",
+  "selected": false
+}, {
+  "name": "Alphabet Inc",
+  "selected": false
+},{
+  "name": "Amazon.com Inc",
+  "selected": false
+}, {
+  "name": "Apple Inc",
+  "selected": false
+}, {
+  "name": "AT&T Inc",
+  "selected": false
+}, {
+  "name": "Avid Bioservices Inc",
+  "selected": false
+}, {
+  "name": "BlackBerry Limited",
+  "selected": false
+}, {
+  "name": "BlackRock Inc",
+  "selected": false
+}, {
+  "name": "Boeing",
+  "selected": false
+}, {
+  "name": "Canopy Growth Corporation",
+  "selected": false
+}, {
+  "name": "Citigroup Inc",
+  "selected": false
+}, {
+  "name": "CME Group Inc",
+  "selected": false
+}, {
+  "name": "ConocoPhillips",
+  "selected": false
+}, {
+  "name": "Cummins Inc",
+  "selected": false
+}, {
+  "name": "Dave & Buster\u2019s Entertainment Inc",
+  "selected": false
+}, {
+  "name": "Facebook",
+  "selected": false
+}, {
+  "name": "fuboTV Inc",
+  "selected": false
+}, {
+  "name": "GlaxoSmithKline plc",
+  "selected": false
+}, {
+  "name": "Global Payments Inc",
+  "selected": false
+}, {
+  "name": "Hb Fuller",
+  "selected": false
+}, {
+  "name": "HCI Group Inc",
+  "selected": false
+}, {
+  "name": "Hewlett Packard Enterprise Company",
+  "selected": false
+}, {
+  "name": "IBM",
+  "selected": false
+}, {
+  "name": "Johnson & Johnson",
+  "selected": false
+}, {
+  "name": "MakeMyTrip Limited",
+  "selected": false
+}, {
+  "name": "Medtronic PLC",
+  "selected": false
+}, {
+  "name": "MetLife Inc",
+  "selected": false
+}, {
+  "name": "MGM Resorts International",
+  "selected": false
+}, {
+  "name": "Moderna Inc",
+  "selected": false
+}, {
+  "name": "Morgan Stanley",
+  "selected": false
+}, {
+  "name": "Nasdaq Inc",
+  "selected": false
+}, {
+  "name": "NetEase Inc",
+  "selected": false
+}, {
+  "name": "Nio Inc",
+  "selected": false
+}, {
+  "name": "Novagold Resources Inc",
+  "selected": false
+}, {
+  "name": "Novavax Inc",
+  "selected": false
+}, {
+  "name": "Pfizer",
+  "selected": false
+}, {
+  "name": "Pinduoduo Inc",
+  "selected": false
+}, {
+  "name": "Regeneron Pharmaceuticals Inc",
+  "selected": false
+}, {
+  "name": "Republic Services Inc",
+  "selected": false
+}, {
+  "name": "Signature Bank",
+  "selected": false
+}, {
+  "name": "Take-Two Interactive Software Inc",
+  "selected": false
+}, {
+  "name": "Tata Consultancy Services Ltd",
+  "selected": false
+}, {
+  "name": "TMX Group Limited",
+  "selected": false
+}, {
+  "name": "Total SA",
+  "selected": false
+}, {
+  "name": "Trip.com Group Ltd",
+  "selected": false
+}, {
+  "name": "Uber Technologies Inc",
+  "selected": false
+}, {
+  "name": "UnitedHealth Group",
+  "selected": false
+}, {
+  "name": "Visa Inc",
+  "selected": false
+}, {
+  "name": "Whirlpool Corp",
+  "selected": false
+}, {
+  "name": "Worley Ltd.",
+  "selected": false
+}, {
+  "name": "XPeng Inc.",
+  "selected": false
+}, {
+  "name": "Yatra Online Inc",
+  "selected": false
+}, {
+  "name": "Zoom Video Communications Inc",
+  "selected": false
+}]
